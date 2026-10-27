@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Catalog</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <div>
+      <h1>Product Catalog</h1>
+      <p>Manage your products simply.</p>
+    </div>
+    <span id="versionBadge" class="version-badge">Loading...</span>
+  </header>
+
+  <main class="container">
+    <section class="panel">
+      <h2>Add Product</h2>
+      <form id="productForm">
+        <label for="productName">Product name</label>
+        <input id="productName" type="text"
+               placeholder="e.g. Wireless Mouse" required maxlength="80">
+
+        <label for="productPrice">Price (₹)</label>
+        <input id="productPrice" type="number"
+               placeholder="e.g. 799" min="0.01" step="0.01" required>
+
+        <label for="productCategory">Category</label>
+        <input id="productCategory" type="text"
+               placeholder="e.g. Electronics" maxlength="50" required>
+
+        <button type="submit">Add Product</button>
+        <p id="formMessage" role="status"></p>
+      </form>
+    </section>
+
+    <section id="catalogSection" class="panel hidden">
+      <div class="section-heading">
+        <h2>Product List</h2>
+        <span id="productCount">0 products</span>
+      </div>
+
+      <div id="searchSection" class="hidden">
+        <label for="searchInput">Search products by name</label>
+        <input id="searchInput" type="search"
+               placeholder="Type a product name...">
+      </div>
+
+      <div id="productList" class="product-list"></div>
+      <p id="emptyMessage">No products to display yet.</p>
+    </section>
+  </main>
+
+  <footer>Product Catalog · Register No. 24MIS0205</footer>
+
+  <script src="version.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

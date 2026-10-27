@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Catalog - Version 2</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="header">
+        <div>
+            <h1>Product Catalog</h1>
+            <p>Manage and view your products easily.</p>
+        </div>
+        <span class="version-badge">VERSION V2</span>
+    </header>
+
+    <main class="container">
+
+        <!-- Add Product Section -->
+        <section class="panel">
+            <h2>Add Product</h2>
+
+            <form id="productForm">
+                <label for="productName">Product Name</label>
+                <input
+                    type="text"
+                    id="productName"
+                    placeholder="e.g. Wireless Mouse"
+                    maxlength="80"
+                    required
+                >
+
+                <label for="productPrice">Price (₹)</label>
+                <input
+                    type="number"
+                    id="productPrice"
+                    placeholder="e.g. 799"
+                    min="0.01"
+                    step="0.01"
+                    required
+                >
+
+                <label for="productCategory">Category</label>
+                <input
+                    type="text"
+                    id="productCategory"
+                    placeholder="e.g. Electronics"
+                    maxlength="50"
+                    required
+                >
+
+                <button type="submit">Add Product</button>
+
+                <p id="formMessage" role="status"></p>
+            </form>
+        </section>
+
+        <!-- View Products Section -->
+        <section class="panel">
+            <div class="section-heading">
+                <h2>Product List</h2>
+                <span id="productCount">0 products</span>
+            </div>
+
+            <div id="productList" class="product-list"></div>
+
+            <p id="emptyMessage">No products to display yet.</p>
+        </section>
+
+    </main>
+
+    <footer>
+        Product Catalog | Register No: 24MIS0205
+    </footer>
+
+    <script src="app.js"></script>
+
+</body>
+</html>
