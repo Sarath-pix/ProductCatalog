@@ -2,58 +2,67 @@
 pipeline {
     agent any
 
+    environment {
+        DOCKER = '/usr/local/bin/docker'
+        IMAGE_NAME = 'sarathvenkat07/productcatalog'
+    }
+
     stages {
         stage('Checkout') {
             steps {
-                echo 'Product Catalog source is configured in GitHub.'
                 checkout scm
+                echo 'Source code checked out successfully.'
             }
         }
 
-        stage('Validate Version Files') {
+        stage('Validate Files') {
             steps {
                 sh '''
                     set -e
-                    test -f v1/index.html
-                    test -f v1/app.js
-                    test -f v1/style.css
-
-                    test -f v2/index.html
-                    test -f v2/app.js
-                    test -f v2/style.css
-
-                    test -f v3/index.html
-                    test -f v3/app.js
-                    test -f v3/style.css
-
-                    echo "All three versions contain the required files."
-                '''
-            }
-        }
-
-        stage('Validate Dockerfile') {
-            steps {
-                sh '''
-                    set -e
+                    for version in v1 v2 v3; do
+                        test -f "$version/index.html"
+                        test -f "$version/style.css"
+                        test -f "$version/app.js"
+                    done
                     test -s Dockerfile
-                    echo "Dockerfile exists and is not empty."
+                    echo "All version files and Dockerfile validated."
                 '''
             }
         }
 
-        stage('Complete') {
+        stage('Build Docker Images') {
             steps {
-                echo 'Product Catalog validation completed successfully.'
+                sh '''
+                    set -e
+                    "$DOCKER" build --build-arg VERSION=v1 \
+                        -t "$IMAGE_NAME:v1" .
+                    "$DOCKER" build --build-arg VERSION=v2 \
+                        -t "$IMAGE_NAME:v2" .
+                    "$DOCKER" build --build-arg VERSION=v3 \
+                        -t "$IMAGE_NAME:v3" .
+                '''
+            }
+        }
+
+        stage('Verify Docker Images') {
+            steps {
+                sh '''
+                    set -e
+                    "$DOCKER" image inspect "$IMAGE_NAME:v1"
+                    "$DOCKER" image inspect "$IMAGE_NAME:v2"
+                    "$DOCKER" image inspect "$IMAGE_NAME:v3"
+                    echo "All three Docker images built successfully."
+                '''
             }
         }
     }
 
     post {
         success {
-            echo 'Product Catalog pipeline succeeded.'
+            echo 'Product Catalog CI pipeline completed successfully.'
         }
         failure {
-            echo 'Product Catalog pipeline failed. Check the console output.'
+            echo 'Pipeline failed. Check Console Output for details.'
         }
     }
 }
