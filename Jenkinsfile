@@ -3,9 +3,10 @@ pipeline {
     agent any
 
     environment {
-        DOCKER = '/usr/local/bin/docker'
-        IMAGE_NAME = 'sarathvenkat07/productcatalog'
-    }
+    DOCKER = '/usr/local/bin/docker'
+    IMAGE_NAME = 'sarathvenkat07/productcatalog'
+    PATH = '/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin'
+}
 
     stages {
         stage('Checkout') {
